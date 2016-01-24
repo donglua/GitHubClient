@@ -2,11 +2,11 @@
 
   <!-- Base application theme. -->
   <style name="AppTheme"
-      parent="Theme.AppCompat.Light.DarkActionBar">
+      parent="Theme.AppCompat.Light">
     <!-- Customize your theme here. -->
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
+    <!--<item name="colorAccent">@color/colorAccent</item>-->
   </style>
 
   <style name="AppTheme.NoActionBar">
@@ -15,9 +15,21 @@
   </style>
 
   <style name="AppTheme.AppBarOverlay"
-      parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+      parent="ThemeOverlay.AppCompat.ActionBar"/>
 
   <style name="AppTheme.PopupOverlay"
-      parent="ThemeOverlay.AppCompat.Light"/>
+      parent="ThemeOverlay.AppCompat.Dark"/>
+
+
+  <style name="Theme.U2020.TrendingTimespan" parent="Theme.AppCompat.Light">
+    <item name="android:spinnerDropDownItemStyle">
+      @style/Widget.U2020.TrendingTimespan.DropDownItem
+    </item>
+  </style>
+
+  <style name="Widget.U2020.TrendingTimespan.DropDownItem"
+      parent="Widget.AppCompat.Light.DropDownItem.Spinner">
+    <item name="android:background">@drawable/selectable_item_background</item>
+  </style>
 
 </resources>

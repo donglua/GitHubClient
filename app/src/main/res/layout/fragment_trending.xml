@@ -13,7 +13,7 @@
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         tools:ignore="UnusedAttribute"
         >
       <LinearLayout
@@ -30,12 +30,12 @@
             android:text="@string/trending_title"
             android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
             />
-        <Spinner
+        <android.support.v7.widget.AppCompatSpinner
             android:id="@+id/trending_timespan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:popupBackground="@drawable/popup_background"
-            />
+        />
       </LinearLayout>
     </android.support.v7.widget.Toolbar>
 
