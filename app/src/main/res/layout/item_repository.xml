@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <data>
+    <import type="com.droidcoding.github.model.Repository" />
+    <variable name="repo" type="Repository" />
+  </data>
+
+  <android.support.v7.widget.CardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+      <de.hdodenhof.circleimageview.CircleImageView
+          app:imageUrl="@{repo.owner.avatar_url}"
+          android:layout_width="48dp"
+          android:layout_height="48dp"
+          />
+
+    </RelativeLayout>
+
+  </android.support.v7.widget.CardView>
+</layout>
