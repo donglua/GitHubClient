@@ -7,4 +7,7 @@
 
   <string name="trending_title">Trending&#160;</string>
 
+  <string name="empty_message">
+    There doesn\'t seem to be\nanything trending in this timespan.
+  </string>
 </resources>

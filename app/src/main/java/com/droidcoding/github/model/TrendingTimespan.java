@@ -1,5 +1,6 @@
 package com.droidcoding.github.model;
 
+import com.droidcoding.github.data.api.SearchQuery;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.temporal.ChronoUnit;
 import org.threeten.bp.temporal.TemporalUnit;

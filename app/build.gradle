@@ -18,6 +18,8 @@ android {
     targetSdkVersion 23
     versionCode 1
     versionName "1.0"
+
+    renderscriptSupportModeEnabled true
   }
   buildTypes {
     release {
@@ -51,13 +53,6 @@ dependencies {
   compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
   compile 'com.jakewharton.threetenabp:threetenabp:1.0.2'
 
-  // Retrofit2
-  compile "com.squareup.retrofit2:retrofit:${retrofitLibVersion}"
-  compile "com.squareup.retrofit2:converter-gson:${retrofitLibVersion}"
-  compile "com.squareup.retrofit2:adapter-rxjava:${retrofitLibVersion}"
-  // OkHttp3
-  compile "com.squareup.okhttp3:okhttp:${okhttpLibVersion}"
-  compile "com.squareup.okhttp3:logging-interceptor:${okhttpLibVersion}"
   // Dagger2
   compile "com.google.dagger:dagger:${daggerLibVersion}"
   apt "com.google.dagger:dagger-compiler:${daggerLibVersion}"
@@ -65,6 +60,13 @@ dependencies {
   // Rx
   compile 'io.reactivex:rxjava:1.1.0'
   compile 'io.reactivex:rxandroid:1.1.0'
+  // Retrofit2
+  compile "com.squareup.retrofit2:retrofit:${retrofitLibVersion}"
+  compile "com.squareup.retrofit2:converter-gson:${retrofitLibVersion}"
+  compile "com.squareup.retrofit2:adapter-rxjava:${retrofitLibVersion}"
+  // OkHttp3
+  compile "com.squareup.okhttp3:okhttp:${okhttpLibVersion}"
+  compile "com.squareup.okhttp3:logging-interceptor:${okhttpLibVersion}"
 
   compile 'com.f2prateek.rx.preferences:rx-preferences:1.0.0'
 
@@ -74,10 +76,6 @@ dependencies {
   // Glide
   compile 'com.github.bumptech.glide:glide:3.6.1'
 
-  // Flow and Mortar
-  compile 'com.squareup.flow:flow:0.12'
-  compile('com.squareup.mortar:mortar:0.19') {
-    exclude group: 'com.squareup.dagger'
-  }
+  compile 'com.malinskiy:superrecyclerview:1.1.1'
 
 }

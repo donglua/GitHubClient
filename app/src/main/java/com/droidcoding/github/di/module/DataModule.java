@@ -2,8 +2,9 @@ package com.droidcoding.github.di.module;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-import com.droidcoding.github.api.IntentFactory;
-import com.droidcoding.github.api.oauth.AccessToken;
+import com.droidcoding.github.data.InstantDeserializer;
+import com.droidcoding.github.data.api.IntentFactory;
+import com.droidcoding.github.data.oauth.AccessToken;
 import com.droidcoding.github.di.scope.ApplicationScope;
 import com.f2prateek.rx.preferences.Preference;
 import com.f2prateek.rx.preferences.RxSharedPreferences;
@@ -15,6 +16,9 @@ import dagger.Provides;
 import java.io.File;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import org.threeten.bp.Instant;
+import timber.log.Timber;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.jakewharton.byteunits.DecimalByteUnit.MEGABYTES;
@@ -45,8 +49,8 @@ public class DataModule {
     return IntentFactory.REAL;
   }
 
-  @Provides @ApplicationScope OkHttpClient provideOkHttpClient(Application app) {
-    return createOkHttpClient(app).build();
+  @Provides @ApplicationScope OkHttpClient provideOkHttpClient(Application app, HttpLoggingInterceptor loggingInterceptor) {
+    return createOkHttpClient(app).addInterceptor(loggingInterceptor).build();
   }
 
   static OkHttpClient.Builder createOkHttpClient(Application app) {
@@ -62,6 +66,15 @@ public class DataModule {
   @Provides public Gson provideGson() {
     return new GsonBuilder()
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .registerTypeAdapter(Instant.class, new InstantDeserializer())
         .create();
   }
+
+
+  @Provides @ApplicationScope HttpLoggingInterceptor provideLoggingInterceptor() {
+    HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(message -> Timber.tag("OkHttp").v(message));
+    loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+    return loggingInterceptor;
+  }
+
 }

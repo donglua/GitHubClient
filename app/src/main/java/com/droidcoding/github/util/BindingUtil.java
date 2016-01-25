@@ -11,8 +11,10 @@ import com.bumptech.glide.Glide;
 public class BindingUtil {
 
   @BindingAdapter("imageUrl")
-  public static void loadImage(ImageView imageView, String url) {
-    Glide.with(imageView.getContext()).load(url).crossFade().into(imageView);
+  public static void loadAvatarImage(ImageView imageView, String url) {
+    Glide.with(imageView.getContext())
+        .load(url)
+        .into(imageView);
   }
 
 

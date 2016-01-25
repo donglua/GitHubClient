@@ -1,4 +1,4 @@
-package com.droidcoding.github.api.oauth;
+package com.droidcoding.github.data.oauth;
 
 import java.lang.annotation.Retention;
 import javax.inject.Qualifier;

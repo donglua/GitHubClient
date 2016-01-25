@@ -1,4 +1,4 @@
-package com.droidcoding.github.api;
+package com.droidcoding.github.data.api;
 
 import android.content.Intent;
 import android.net.Uri;

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.droidcoding.github.di.DaggerGraph;
 import com.droidcoding.github.di.component.DaggerGithubComponent;
 import com.droidcoding.github.di.module.GithubModule;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 import timber.log.Timber;
 
 /**
@@ -16,6 +17,7 @@ public class GithubApp extends Application {
 
   @Override public void onCreate() {
     super.onCreate();
+    AndroidThreeTen.init(this);
 
     Timber.plant(BuildConfig.DEBUG ? new Timber.DebugTree() : new Timber.Tree() {
       @Override protected void log(int priority, String tag, String message, Throwable t) {

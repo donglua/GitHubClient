@@ -1,8 +1,8 @@
-package com.droidcoding.github.api.oauth;
+package com.droidcoding.github.data.oauth;
 
 import android.content.Intent;
 import android.net.Uri;
-import com.droidcoding.github.api.IntentFactory;
+import com.droidcoding.github.data.api.IntentFactory;
 import com.droidcoding.github.di.scope.ApplicationScope;
 import com.f2prateek.rx.preferences.Preference;
 import com.google.gson.Gson;

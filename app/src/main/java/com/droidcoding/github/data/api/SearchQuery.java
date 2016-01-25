@@ -1,4 +1,4 @@
-package com.droidcoding.github.model;
+package com.droidcoding.github.data.api;
 
 import org.threeten.bp.LocalDate;
 

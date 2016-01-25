@@ -1,4 +1,4 @@
-package com.droidcoding.github.ui;
+package com.droidcoding.github.ui.activity;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -9,10 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import com.droidcoding.github.R;
-import com.droidcoding.github.api.oauth.AccessToken;
-import com.droidcoding.github.api.oauth.OauthInterceptor;
-import com.droidcoding.github.api.oauth.OauthManager;
-import com.droidcoding.github.api.oauth.OauthService;
+import com.droidcoding.github.data.oauth.AccessToken;
+import com.droidcoding.github.data.oauth.OauthInterceptor;
+import com.droidcoding.github.data.oauth.OauthManager;
+import com.droidcoding.github.data.oauth.OauthService;
 import com.droidcoding.github.databinding.ActivityWebViewBinding;
 import com.droidcoding.github.di.Injector;
 import com.f2prateek.rx.preferences.Preference;

@@ -3,13 +3,41 @@ package com.droidcoding.github.ui.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.GravityCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.droidcoding.github.R;
+import com.droidcoding.github.data.Funcs;
+import com.droidcoding.github.data.Results;
+import com.droidcoding.github.data.api.GithubService;
+import com.droidcoding.github.data.api.Order;
+import com.droidcoding.github.data.api.SearchQuery;
+import com.droidcoding.github.data.api.Sort;
 import com.droidcoding.github.databinding.FragmentTrendingBinding;
+import com.droidcoding.github.di.Injector;
+import com.droidcoding.github.model.RepositoriesResponse;
+import com.droidcoding.github.model.Repository;
+import com.droidcoding.github.model.SearchResultToRepositoryList;
+import com.droidcoding.github.model.TrendingTimespan;
+import com.droidcoding.github.ui.adapter.RepositoryAdapter;
 import com.droidcoding.github.ui.adapter.TrendingTimespanAdapter;
+import com.jakewharton.rxbinding.widget.RxAdapterView;
+import java.util.ArrayList;
+import java.util.List;
+import javax.inject.Inject;
+import retrofit2.Response;
+import retrofit2.Result;
+import rx.Observable;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
+import rx.subjects.PublishSubject;
+import rx.subscriptions.CompositeSubscription;
+import timber.log.Timber;
+
+import static rx.android.schedulers.AndroidSchedulers.mainThread;
 
 /**
  * Trending
@@ -19,6 +47,36 @@ public class TrendingFragment extends NavBaseFragment {
 
   private FragmentTrendingBinding binding;
   private TrendingTimespanAdapter timespanAdapter;
+  @Inject GithubService githubService;
+
+  private final CompositeSubscription subscriptions = new CompositeSubscription();
+  private PublishSubject<TrendingTimespan> timespanSubject;
+
+  private List<Repository> mRepositories;
+
+  private int page = 0;
+
+  private final Func1<TrendingTimespan, Observable<Result<RepositoriesResponse>>> trendingSearch =
+      new Func1<TrendingTimespan, Observable<Result<RepositoriesResponse>>>() {
+        @Override
+        public Observable<Result<RepositoriesResponse>> call(TrendingTimespan trendingTimespan) {
+          SearchQuery trendingQuery = new SearchQuery.Builder() //
+              .createdSince(trendingTimespan.createdSince()) //
+              .build();
+          return githubService.repositories(trendingQuery, Sort.STARS, Order.DESC, page)
+              .subscribeOn(Schedulers.io());
+        }
+      };
+
+  private final Action1<Result<RepositoriesResponse>> trendingError = result -> {
+    if (result.isError()) {
+      Timber.e(result.error(), "Failed to get trending repositories");
+    } else {
+      Response<RepositoriesResponse> response = result.response();
+      Timber.e("Failed to get trending repositories. Server returned %d", response.code());
+    }
+    binding.trendingListView.showRecycler();
+  };
 
   public static TrendingFragment newInstance() {
     Bundle args = new Bundle();
@@ -30,8 +88,34 @@ public class TrendingFragment extends NavBaseFragment {
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    mRepositories = new ArrayList<>();
+    timespanSubject = PublishSubject.create();
+
+    Injector.obtain(getContext()).inject(this);
+
     timespanAdapter = new TrendingTimespanAdapter(
         new ContextThemeWrapper(getContext(), R.style.Theme_U2020_TrendingTimespan));
+
+
+    Observable<Result<RepositoriesResponse>> result = timespanSubject //
+        .flatMap(trendingSearch) //
+        .observeOn(mainThread()) //
+        .share();
+    subscriptions.add(result //
+        .filter(Results.isSuccess()) //
+        .map(SearchResultToRepositoryList.instance()) //
+        .subscribe(repositories -> {
+          if (page == 0) mRepositories.clear();
+          mRepositories.addAll(repositories);
+          if (binding.trendingListView.getAdapter() == null) {
+            binding.trendingListView.setAdapter(new RepositoryAdapter(mRepositories));
+          }
+          binding.trendingListView.getAdapter().notifyDataSetChanged();
+        }));
+    subscriptions.add(result //
+        .filter(Funcs.not(Results.isSuccess())) //
+        .subscribe(trendingError));
+
   }
 
   @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -42,10 +126,20 @@ public class TrendingFragment extends NavBaseFragment {
         v -> getMainActivity().getDrawerLayout().openDrawer(GravityCompat.START));
 
     binding.trendingTimespan.setAdapter(timespanAdapter);
-    //binding.trendingTimespan.setOnItemClickListener((parent, view, position, id) -> {
-    //
-    //});
+
+    binding.trendingListView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+    subscriptions.add(RxAdapterView.itemSelections(binding.trendingTimespan)
+        .observeOn(mainThread())
+        .subscribe(position -> timespanSubject.onNext(timespanAdapter.getItem(position))));
+
+    binding.trendingTimespan.setSelection(TrendingTimespan.WEEK.ordinal());
 
     return binding.getRoot();
+  }
+
+  @Override public void onDestroy() {
+    super.onDestroy();
+    subscriptions.unsubscribe();
   }
 }

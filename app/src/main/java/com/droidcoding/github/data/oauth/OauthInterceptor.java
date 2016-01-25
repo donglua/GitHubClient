@@ -1,4 +1,4 @@
-package com.droidcoding.github.api.oauth;
+package com.droidcoding.github.data.oauth;
 
 import com.droidcoding.github.di.scope.ApplicationScope;
 import com.f2prateek.rx.preferences.Preference;
