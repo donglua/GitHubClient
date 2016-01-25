@@ -11,7 +11,7 @@ import rx.Observable;
  */
 public interface GithubService {
 
-  @GET("search/repositories?per_page=10") //
+  @GET("search/repositories?per_page=20") //
   Observable<Result<RepositoriesResponse>> repositories( //
       @Query("q") SearchQuery query, //
       @Query("sort") Sort sort, //

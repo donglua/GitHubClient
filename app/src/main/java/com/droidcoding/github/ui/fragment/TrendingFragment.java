@@ -54,7 +54,8 @@ public class TrendingFragment extends NavBaseFragment {
 
   private List<Repository> mRepositories;
 
-  private int page = 0;
+  private final static int FRIST_PAGE = 1;
+  private int page = FRIST_PAGE;
 
   private final Func1<TrendingTimespan, Observable<Result<RepositoriesResponse>>> trendingSearch =
       new Func1<TrendingTimespan, Observable<Result<RepositoriesResponse>>>() {
@@ -96,16 +97,16 @@ public class TrendingFragment extends NavBaseFragment {
     timespanAdapter = new TrendingTimespanAdapter(
         new ContextThemeWrapper(getContext(), R.style.Theme_U2020_TrendingTimespan));
 
-
     Observable<Result<RepositoriesResponse>> result = timespanSubject //
         .flatMap(trendingSearch) //
         .observeOn(mainThread()) //
         .share();
+
     subscriptions.add(result //
         .filter(Results.isSuccess()) //
         .map(SearchResultToRepositoryList.instance()) //
         .subscribe(repositories -> {
-          if (page == 0) mRepositories.clear();
+          if (page == FRIST_PAGE) mRepositories.clear();
           mRepositories.addAll(repositories);
           if (binding.trendingListView.getAdapter() == null) {
             binding.trendingListView.setAdapter(new RepositoryAdapter(mRepositories));
@@ -115,7 +116,12 @@ public class TrendingFragment extends NavBaseFragment {
     subscriptions.add(result //
         .filter(Funcs.not(Results.isSuccess())) //
         .subscribe(trendingError));
+  }
 
+  private void onRefresh() {
+    page = FRIST_PAGE;
+    timespanSubject.onNext(
+        timespanAdapter.getItem(binding.trendingTimespan.getSelectedItemPosition()));
   }
 
   @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
@@ -128,12 +134,23 @@ public class TrendingFragment extends NavBaseFragment {
     binding.trendingTimespan.setAdapter(timespanAdapter);
 
     binding.trendingListView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-    subscriptions.add(RxAdapterView.itemSelections(binding.trendingTimespan)
-        .observeOn(mainThread())
-        .subscribe(position -> timespanSubject.onNext(timespanAdapter.getItem(position))));
+    binding.trendingListView.setRefreshListener(this::onRefresh);
+    binding.trendingListView.setupMoreListener(
+        (overallItemsCount, itemsBeforeMore, maxLastVisiblePosition) -> {
+          page += 1;
+          timespanSubject.onNext(
+              timespanAdapter.getItem(binding.trendingTimespan.getSelectedItemPosition()));
+        }, 1);
 
     binding.trendingTimespan.setSelection(TrendingTimespan.WEEK.ordinal());
+
+    subscriptions.add(RxAdapterView.itemSelections(binding.trendingTimespan)
+        .observeOn(mainThread()).subscribe(position -> {
+          binding.trendingTimespan.post(() -> {
+            onRefresh();
+            binding.trendingListView.setRefreshing(true);
+          });
+        }));
 
     return binding.getRoot();
   }
