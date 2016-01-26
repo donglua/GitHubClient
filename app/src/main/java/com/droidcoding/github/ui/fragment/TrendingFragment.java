@@ -26,6 +26,7 @@ import com.droidcoding.github.ui.adapter.TrendingTimespanAdapter;
 import com.jakewharton.rxbinding.widget.RxAdapterView;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import retrofit2.Response;
 import retrofit2.Result;
@@ -98,6 +99,7 @@ public class TrendingFragment extends NavBaseFragment {
         new ContextThemeWrapper(getContext(), R.style.Theme_U2020_TrendingTimespan));
 
     Observable<Result<RepositoriesResponse>> result = timespanSubject //
+        .debounce(300, TimeUnit.MILLISECONDS) //
         .flatMap(trendingSearch) //
         .observeOn(mainThread()) //
         .share();
