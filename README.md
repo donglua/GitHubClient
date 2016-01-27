@@ -6,6 +6,11 @@ GithubAndroid
 ![Main](https://github.com/donglua/GitHubClient/blob/master/art/screenshot_main.png)
 ![DrawerLayout](https://github.com/donglua/GitHubClient/blob/master/art/screenshot_drawer.png)
 
+Thanks
+-------
+* <a href="httpshttps://github.com/JakeWharton/u2020" target="_blank">JakeWharton/U+2020</a>
+
+
 Libraries
 -------
 
