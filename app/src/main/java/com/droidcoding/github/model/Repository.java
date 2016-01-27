@@ -2,7 +2,6 @@ package com.droidcoding.github.model;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.alorma.github.sdk.bean.dto.response.User;
 import org.threeten.bp.Instant;
 
 import static com.droidcoding.github.util.Preconditions.checkNotNull;

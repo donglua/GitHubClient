@@ -22,7 +22,7 @@
       <de.hdodenhof.circleimageview.CircleImageView
           android:id="@+id/iv_avatar"
           android:src="@drawable/avatar"
-          app:imageUrl="@{repo.owner.avatar_url}"
+          app:imageUrl="@{repo.owner.avatarUrl}"
           android:layout_width="48dp"
           android:layout_height="48dp"
           />

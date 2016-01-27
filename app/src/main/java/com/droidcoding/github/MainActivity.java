@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 import com.droidcoding.github.data.Results;
 import com.droidcoding.github.data.api.GithubService;
