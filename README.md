@@ -9,7 +9,7 @@ GithubAndroid
 Thanks
 -------
 
-* <a href="https://github.com/JakeWharton/u2020" target="_blank">JakeWharton/U+2020</a> A lot of codes were borrowed from this project.
+* <a href="https://github.com/JakeWharton/u2020" target="_blank">JakeWharton/U+2020</a>
 
 
 Libraries
