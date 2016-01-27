@@ -1,7 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="200dip">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+  <data>
+    <import type="android.view.View" />
+    <import type="com.droidcoding.github.model.User" />
+    <variable name="user" type="User" />
+  </data>
 
-</LinearLayout>
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center">
+
+    <com.droidcoding.github.ui.widget.AspectRatioImageView
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:widthRatio="16"
+        app:heightRatio="9"
+        />
+
+    <Button
+        android:visibility="@{user==null?View.VISIBLE:View.GONE}"
+        android:id="@+id/button_sign_in"
+        android:layout_centerInParent="true"
+        android:text="@string/sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <LinearLayout
+        android:visibility="@{user==null?View.GONE:View.VISIBLE}"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+      <de.hdodenhof.circleimageview.CircleImageView
+          android:layout_width="54dip"
+          android:layout_height="54dip"
+          android:src="@drawable/avatar"
+          app:imageUrl="@{user.avatarUrl}"
+          />
+      <android.support.v4.widget.Space
+          android:layout_width="wrap_content"
+          android:layout_height="16dp"
+          />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:ellipsize="end"
+          android:maxLines="1"
+          android:text="@{user.name}"
+          android:singleLine="true"
+          android:textColor="?android:attr/textColorPrimary"
+          android:textSize="16sp"
+          />
+    </LinearLayout>
+
+  </RelativeLayout>
+</layout>

@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
+import timber.log.Timber;
 
 @ApplicationScope public final class OauthInterceptor implements Interceptor {
   private final Preference<String> accessToken;
@@ -20,6 +21,7 @@ import okhttp3.Response;
 
     if (accessToken.isSet()) {
       builder.header("Authorization", "token " + accessToken.get());
+      Timber.d("header add %s", accessToken.get());
     }
 
     return chain.proceed(builder.build());
