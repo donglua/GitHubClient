@@ -1,6 +1,8 @@
 #GithubAndroid
 > How I build apps using the libraries I would use.
 
+![Main](https://github.com/donglua/GitHubClient/blob/master/art/screenshot_main.png)
+![DrawerLayout](https://github.com/donglua/GitHubClient/blob/master/art/screenshot_drawer.png)
 
 ## Libraries
 
