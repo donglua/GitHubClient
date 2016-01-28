@@ -17,9 +17,9 @@ Thanks
 Libraries
 -------
 
-* <a href="https://github.com/google/dagger" target="_blank">Dagger 2</a>
-* <a href="https://github.com/square/retrofit" target="_blank">Retrofit</a>
-* <a href="https://github.com/square/okhttp" target="_blank">OkHttp</a>
+* <a href="https://github.com/google/dagger" target="_blank">Dagger2</a>
+* <a href="https://github.com/square/retrofit" target="_blank">Retrofit2</a>
+* <a href="https://github.com/square/okhttp" target="_blank">OkHttp3</a>
 * <a href="https://github.com/google/gson" target="_blank">Gson</a>
 * <a href="https://github.com/ReactiveX/RxJava" target="_blank">RxJava</a>
 * <a href="https://github.com/ReactiveX/RxAndroid" target="_blank">RxAndroid</a>
