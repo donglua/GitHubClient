@@ -37,15 +37,10 @@
           >
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
             android:text="@{repo.name}"
-            android:singleLine="true"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textSize="16sp"
+            style="@style/text_title"
             />
+
         <TextView
             android:id="@+id/trending_repository_description"
             android:layout_width="match_parent"

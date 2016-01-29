@@ -12,6 +12,7 @@ import com.droidcoding.github.R;
 import com.droidcoding.github.data.Funcs;
 import com.droidcoding.github.data.Results;
 import com.droidcoding.github.data.api.GithubService;
+import com.droidcoding.github.data.api.IntentFactory;
 import com.droidcoding.github.data.api.Order;
 import com.droidcoding.github.data.api.SearchQuery;
 import com.droidcoding.github.data.api.Sort;
@@ -48,7 +49,9 @@ public class TrendingFragment extends NavBaseFragment {
 
   private FragmentTrendingBinding binding;
   private TrendingTimespanAdapter timespanAdapter;
+  private RepositoryAdapter repositoryAdapter;
   @Inject GithubService githubService;
+  @Inject IntentFactory mIntentFactory;
 
   private final CompositeSubscription subscriptions = new CompositeSubscription();
   private PublishSubject<TrendingTimespan> timespanSubject;
@@ -97,6 +100,10 @@ public class TrendingFragment extends NavBaseFragment {
 
     timespanAdapter = new TrendingTimespanAdapter(
         new ContextThemeWrapper(getContext(), R.style.Theme_U2020_TrendingTimespan));
+    repositoryAdapter = new RepositoryAdapter(mRepositories);
+    repositoryAdapter.setRepositoryClickListener(repository -> {
+      startActivity(mIntentFactory.createUrlIntent(repository.html_url));
+    });
 
     Observable<Result<RepositoriesResponse>> result = timespanSubject //
         .debounce(300, TimeUnit.MILLISECONDS) //
@@ -111,9 +118,9 @@ public class TrendingFragment extends NavBaseFragment {
           if (page == FRIST_PAGE) mRepositories.clear();
           mRepositories.addAll(repositories);
           if (binding.trendingListView.getAdapter() == null) {
-            binding.trendingListView.setAdapter(new RepositoryAdapter(mRepositories));
+            binding.trendingListView.setAdapter(repositoryAdapter);
           }
-          binding.trendingListView.getAdapter().notifyDataSetChanged();
+          repositoryAdapter.notifyDataSetChanged();
         }));
     subscriptions.add(result //
         .filter(Funcs.not(Results.isSuccess())) //

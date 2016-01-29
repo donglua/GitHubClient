@@ -15,7 +15,7 @@ import java.util.List;
 public class RepositoryAdapter extends RecyclerView.Adapter<DataBoundViewHolder<ItemRepositoryBinding>> {
 
   private List<Repository> mRepositoryList;
-
+  private RepositoryClickListener mRepositoryClickListener;
   public RepositoryAdapter(List<Repository> repositoryList) {
     mRepositoryList = repositoryList;
   }
@@ -32,9 +32,20 @@ public class RepositoryAdapter extends RecyclerView.Adapter<DataBoundViewHolder<
     final Repository repo = mRepositoryList.get(position);
     holder.getBinding().setRepo(repo);
     holder.getBinding().executePendingBindings();
+    holder.getBinding().getRoot().setOnClickListener(v -> {
+      if (mRepositoryClickListener != null) mRepositoryClickListener.onRepositoryClick(repo);
+    });
   }
 
   @Override public int getItemCount() {
     return mRepositoryList.size();
+  }
+
+  public interface RepositoryClickListener {
+    void onRepositoryClick(Repository repository);
+  }
+
+  public void setRepositoryClickListener(RepositoryClickListener repositoryClickListener) {
+    mRepositoryClickListener = repositoryClickListener;
   }
 }
