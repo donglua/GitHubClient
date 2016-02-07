@@ -2,10 +2,13 @@ package com.droidcoding.github;
 
 import android.app.Application;
 import android.util.Log;
+import com.crashlytics.android.Crashlytics;
+import com.deploygate.sdk.DeployGate;
 import com.droidcoding.github.di.DaggerGraph;
 import com.droidcoding.github.di.component.DaggerGithubComponent;
 import com.droidcoding.github.di.module.GithubModule;
 import com.jakewharton.threetenabp.AndroidThreeTen;
+import io.fabric.sdk.android.Fabric;
 import timber.log.Timber;
 
 /**
@@ -17,6 +20,10 @@ public class GithubApp extends Application {
 
   @Override public void onCreate() {
     super.onCreate();
+    Fabric.with(this, new Crashlytics());
+
+    DeployGate.install(this);
+
     AndroidThreeTen.init(this);
 
     Timber.plant(BuildConfig.DEBUG ? new Timber.DebugTree() : new Timber.Tree() {

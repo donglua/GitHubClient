@@ -3,6 +3,7 @@
     package="com.droidcoding.github"
     >
   <uses-permission android:name="android.permission.INTERNET"/>
+  <uses-permission android:name="android.permission.READ_LOGS" />
 
   <application
       android:name=".GithubApp"
@@ -62,6 +63,9 @@
         android:name=".data.oauth.OauthService"
         android:exported="false"
         />
-  </application>
+      <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="423ff17515038a50c41085cc2dbd0087d2e51cbb" />
+    </application>
 
 </manifest>
