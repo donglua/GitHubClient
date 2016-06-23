@@ -13,7 +13,7 @@ import com.droidcoding.github.di.Injector;
 import com.droidcoding.github.model.Repository;
 import javax.inject.Inject;
 import retrofit2.Response;
-import retrofit2.Result;
+import retrofit2.adapter.rxjava.Result;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;

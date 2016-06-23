@@ -9,9 +9,9 @@ import dagger.Provides;
 import javax.inject.Named;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
-import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
-import retrofit2.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module(
     includes = DataModule.class

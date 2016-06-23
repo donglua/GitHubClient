@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import retrofit2.Response;
-import retrofit2.Result;
+import retrofit2.adapter.rxjava.Result;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;

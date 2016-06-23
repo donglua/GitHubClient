@@ -1,11 +1,11 @@
 package com.droidcoding.github.data;
 
-import retrofit2.Result;
+import retrofit2.adapter.rxjava.Result;
 import rx.functions.Func1;
 
 public final class Results {
   private static final Func1<Result<?>, Boolean> SUCCESS =
-          result -> !result.isError() && result.response().isSuccess();
+          result -> !result.isError() && result.response().isSuccessful();
 
   public static Func1<Result<?>, Boolean> isSuccess() {
     return SUCCESS;

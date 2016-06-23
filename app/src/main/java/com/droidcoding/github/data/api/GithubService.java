@@ -3,7 +3,7 @@ package com.droidcoding.github.data.api;
 import com.droidcoding.github.model.RepositoriesResponse;
 import com.droidcoding.github.model.Repository;
 import com.droidcoding.github.model.User;
-import retrofit2.Result;
+import retrofit2.adapter.rxjava.Result;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 import retrofit2.http.Url;

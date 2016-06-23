@@ -2,7 +2,7 @@ package com.droidcoding.github.model;
 
 import java.util.Collections;
 import java.util.List;
-import retrofit2.Result;
+import retrofit2.adapter.rxjava.Result;
 import rx.functions.Func1;
 
 public final class SearchResultToRepositoryList implements Func1<Result<RepositoriesResponse>, List<Repository>> {

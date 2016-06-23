@@ -6,7 +6,7 @@ apply plugin: 'deploygate'
 
 android {
   compileSdkVersion 23
-  buildToolsVersion "23.0.2"
+  buildToolsVersion "23.0.3"
   compileOptions {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
@@ -32,10 +32,10 @@ android {
 }
 
 ext {
-  supportLibVersion = "23.2.0"
-  retrofitLibVersion = "2.0.0-beta4"
+  supportLibVersion = "24.0.0"
+  retrofitLibVersion = "2.1.0"
   daggerLibVersion = "2.0.2"
-  okhttpLibVersion = "3.2.0"
+  okhttpLibVersion = "3.3.1"
 }
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -75,7 +75,7 @@ dependencies {
   // Glide
   compile 'com.github.bumptech.glide:glide:3.7.0'
 
-  compile 'com.malinskiy:superrecyclerview:1.1.1'
+  compile 'com.malinskiy:superrecyclerview:1.1.4'
 
   compile 'com.deploygate:sdk:3.1'
   compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
